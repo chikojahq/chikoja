@@ -32,7 +32,8 @@ h2{font-size:1.25rem;margin:28px 0 8px}h3{font-size:1.1rem;margin:0;display:inli
 footer{text-align:center;color:var(--muted);font-size:.85rem;padding:24px 16px;border-top:1px solid var(--border)}footer a{color:inherit;display:inline-flex;align-items:center;min-height:44px;padding:0 12px}
 .compact .place{padding:10px 12px}
 :root{--bg:#f6f3ee;--card:#fff;--text:#1f2328;--muted:#5b6168;--accent:#b4532a;--on-accent:#fff;--border:#e4ddd2;--badge-bg:#f3e6dc;--badge-text:#7a3a1c;--bar:#f6f3ee;--bar-text:#1f2328;--phone-bg:#fff;--phone-text:#1f2328;--phone-border:1px solid #e4ddd2;--btn:#fff;--note-bg:#fbf4ec;--r:14px}
-@media(prefers-color-scheme:dark){:root{--bg:#16181c;--card:#1f2227;--text:#e8e6e3;--muted:#a3a8af;--accent:#e08a5e;--on-accent:#1f1410;--border:#33373d;--badge-bg:#3a2a22;--badge-text:#f1c9b2;--bar:#16181c;--bar-text:#e8e6e3;--phone-bg:#1f2227;--phone-text:#e8e6e3;--phone-border:1px solid #33373d;--btn:#1f2227;--note-bg:#2a221e}}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#16181c;--card:#1f2227;--text:#e8e6e3;--muted:#a3a8af;--accent:#e08a5e;--on-accent:#1f1410;--border:#33373d;--badge-bg:#3a2a22;--badge-text:#f1c9b2;--bar:#16181c;--bar-text:#e8e6e3;--phone-bg:#1f2227;--phone-text:#e8e6e3;--phone-border:1px solid #33373d;--btn:#1f2227;--note-bg:#2a221e}}
+:root[data-theme="dark"]{--bg:#16181c;--card:#1f2227;--text:#e8e6e3;--muted:#a3a8af;--accent:#e08a5e;--on-accent:#1f1410;--border:#33373d;--badge-bg:#3a2a22;--badge-text:#f1c9b2;--bar:#16181c;--bar-text:#e8e6e3;--phone-bg:#1f2227;--phone-text:#e8e6e3;--phone-border:1px solid #33373d;--btn:#1f2227;--note-bg:#2a221e}
 .phone b{color:var(--accent)}.place{box-shadow:0 1px 2px rgba(0,0,0,.04)}h1{font-weight:800;letter-spacing:-.01em}
 /* home */
 .search{width:100%;font:inherit;font-size:1.1rem;padding:12px 16px;border-radius:var(--r);border:1px solid var(--border);background:var(--card);color:var(--text);margin:8px 0 20px}
@@ -45,3 +46,11 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;padding:24px 16px;b
 .prose p,.prose li{max-width:65ch}.prose h2{margin-top:28px}
 .crumbs{font-size:.9rem;color:var(--muted);margin:12px 0 0}.crumbs a{color:inherit;display:inline-flex;align-items:center;min-height:44px}
 .pack-note{margin-top:16px}
+
+/* theme toggle: the label shows the theme you will switch TO */
+.theme{background:none;border:1px solid var(--border);border-radius:999px;color:inherit;font:inherit;font-size:.9rem;min-height:44px;min-width:44px;padding:0 12px;cursor:pointer}
+.theme .to-dark,.theme .to-light{display:none}
+:root[data-theme="dark"] .theme .to-light{display:inline}
+:root[data-theme="light"] .theme .to-dark{display:inline}
+:root:not([data-theme]) .theme .to-dark{display:inline}
+@media(prefers-color-scheme:dark){:root:not([data-theme]) .theme .to-dark{display:none}:root:not([data-theme]) .theme .to-light{display:inline}}

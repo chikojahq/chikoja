@@ -14,6 +14,7 @@ export function shell({ title, path, body, built, desc, city, bodyClass = "" }) 
 <title>${esc(title)} — چی‌کجا</title>
 <meta name="description" content="${esc(desc || "جاهای ضروری هر شهر ایران، به فارسی، بدون اینترنت")}">
 <link rel="canonical" href="https://chikoja.ir${path}">
+<script src="/theme.js"></script>
 <link rel="stylesheet" href="/style.css">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.webmanifest">
@@ -21,7 +22,7 @@ export function shell({ title, path, body, built, desc, city, bodyClass = "" }) 
 <meta name="data-date" content="${esc(built)}">
 </head>
 <body class="${bodyClass}">
-<header class="top"><a class="brand" href="/">چی‌کجا</a><nav>${city ? `<a href="/${encodeURI(city.slug)}/">${esc(city.name)}</a>` : ""}<a href="/">شهرها</a></nav></header>
+<header class="top"><a class="brand" href="/">چی‌کجا</a><nav>${city ? `<a href="/${encodeURI(city.slug)}/">${esc(city.name)}</a>` : ""}<a href="/">شهرها</a><button class="theme" type="button" aria-label="تغییر تم روشن و تیره"><span class="to-dark">🌙 تیره</span><span class="to-light">☀️ روشن</span></button></nav></header>
 <main>${body}</main>
 <footer>${ATTR} · به‌روزرسانی داده‌ها: ${jalali(built)} · <a href="/درباره/">درباره</a> · <a href="/راهنما/ویرایش/">اصلاح داده‌ها</a></footer>
 <script src="/app.js" defer></script>

@@ -2,8 +2,8 @@
 // taps "save this city" (message from app.js). Pages are served cache-first
 // after a network try (stale-while-revalidate), and when the network is gone
 // navigation falls back to the saved city's hub.
-const SHELL = "shell-v1", CITY = "city-v1";
-const SHELL_FILES = ["/", "/style.css", "/app.js", "/fonts/vazirmatn.woff2", "/logo.svg", "/favicon.svg", "/404.html"];
+const SHELL = "shell-v2", CITY = "city-v1";
+const SHELL_FILES = ["/", "/style.css", "/app.js", "/theme.js", "/fonts/vazirmatn.woff2", "/logo.svg", "/favicon.svg", "/404.html"];
 
 self.addEventListener("install", e => { e.waitUntil(caches.open(SHELL).then(c => c.addAll(SHELL_FILES)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(self.clients.claim()); });

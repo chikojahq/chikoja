@@ -70,3 +70,21 @@ test("no external resources or forms in any built file; file count under the lim
   const n = +(await import("node:child_process")).execSync("find dist -type f | wc -l").toString();
   assert.ok(n > 1000 && n < 20000, `dist has ${n} files`);
 });
+
+test("the theme toggle switches and remembers light/dark on the device", async () => {
+  const { chromium } = await import("@playwright/test");
+  const browser = await chromium.launch();
+  try {
+    const page = await (await browser.newContext({ colorScheme: "light" })).newPage();
+    await page.goto(dev.base + encodeURI("/مشهد/"));
+    const bg = () => page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+    const before = await bg();
+    await page.click(".theme");
+    assert.notEqual(await bg(), before, "background changes");
+    assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), "dark");
+    await page.goto(dev.base + "/");
+    assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), "dark", "remembered on the next page");
+    await page.click(".theme");
+    assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), "light");
+  } finally { await browser.close(); }
+});

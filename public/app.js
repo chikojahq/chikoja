@@ -30,3 +30,11 @@ if (save && "serviceWorker" in navigator) {
     reg.active.postMessage({ type: "save-city", slug, urls });
   });
 }
+// Light/dark toggle.
+const themeBtn = document.querySelector(".theme");
+if (themeBtn) themeBtn.addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  try { localStorage.setItem("theme", root.dataset.theme); } catch {}
+});
