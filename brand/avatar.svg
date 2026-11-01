@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="chikoja">
+  <rect width="512" height="512" fill="#b4532a"/>
+  <!-- Map pin: a place. The plus cut into it: an essential place. -->
+  <path fill="#fbf4ec" d="M256 76c-79.5 0-144 62.8-144 140.3 0 99.2 120.6 205.4 135.3 217.9a13.4 13.4 0 0 0 17.4 0C279.4 421.7 400 315.5 400 216.3 400 138.8 335.5 76 256 76z"/>
+  <path fill="#b4532a" d="M236 146h40a10 10 0 0 1 10 10v46h46a10 10 0 0 1 10 10v40a10 10 0 0 1-10 10h-46v46a10 10 0 0 1-10 10h-40a10 10 0 0 1-10-10v-46h-46a10 10 0 0 1-10-10v-40a10 10 0 0 1 10-10h46v-46a10 10 0 0 1 10-10z"/>
+</svg>
