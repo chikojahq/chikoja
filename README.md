@@ -13,6 +13,7 @@ Right now https://chikoja.ir shows a short notice about the original project.
 - Data: [OpenStreetMap](https://www.openstreetmap.org/) © OpenStreetMap
   contributors, [ODbL](https://opendatacommons.org/licenses/odbl/).
 - No accounts, no ads, no analytics, no location tracking.
+- Code: MIT (see LICENSE). Data: ODbL.
 - Contact: chikojahq@gmail.com
 
 ## Develop
