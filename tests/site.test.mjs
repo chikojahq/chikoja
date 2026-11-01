@@ -8,13 +8,16 @@ let dev;
 before(async () => { dev = await startDev(); });
 after(() => dev?.stop());
 
-test("home page is the Persian RTL archive page", async () => {
+test("home page is the Persian RTL coming-back page", async () => {
   const res = await fetch(dev.base + "/");
   assert.equal(res.status, 200);
   const html = await res.text();
   assert.match(html, /<html lang="fa" dir="rtl">/);
   assert.match(html, /چی‌کجا/);
-  assert.match(html, /بایگانی/);
+  assert.match(html, /در حال ساخت دوباره/);
+  assert.match(html, /حتی بدون اینترنت/);
+  assert.match(html, /coming back/);
+  assert.doesNotMatch(html, /بایگانی/);
   assert.match(html, /2013–2015/);
   assert.match(html, /lang="en"/);
   assert.match(res.headers.get("content-security-policy") ?? "", /default-src 'none'/);
@@ -34,7 +37,7 @@ test("www and other subdomains redirect once to the apex", async () => {
   assert.equal(await apex.text(), "asset");
 });
 
-test("old URLs get a real 404 with the archive notice", async () => {
+test("old URLs get a real 404 with a notice", async () => {
   const res = await fetch(dev.base + "/tehran/restaurants/123");
   assert.equal(res.status, 404);
   assert.match(await res.text(), /این صفحه دیگر وجود ندارد/);
