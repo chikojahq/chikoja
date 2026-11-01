@@ -1,0 +1,55 @@
+{
+ "total": 21491,
+ "big": {
+  "tehran": {
+   "pharmacies": 1117,
+   "fire": 83,
+   "police": 204,
+   "fuel": 127,
+   "water": 165,
+   "red-crescent": 49,
+   "hospitals": 186,
+   "shelter": 311
+  },
+  "mashhad": {
+   "fuel": 107,
+   "police": 69,
+   "fire": 40,
+   "red-crescent": 8,
+   "hospitals": 48,
+   "pharmacies": 204,
+   "water": 13,
+   "shelter": 138
+  },
+  "tabriz": {
+   "fuel": 49,
+   "pharmacies": 100,
+   "hospitals": 50,
+   "police": 37,
+   "water": 20,
+   "fire": 21,
+   "red-crescent": 19,
+   "shelter": 87
+  },
+  "isfahan": {
+   "fuel": 65,
+   "hospitals": 44,
+   "pharmacies": 140,
+   "police": 39,
+   "water": 32,
+   "fire": 17,
+   "red-crescent": 4,
+   "shelter": 94
+  },
+  "shiraz": {
+   "fuel": 74,
+   "water": 52,
+   "pharmacies": 192,
+   "police": 50,
+   "hospitals": 50,
+   "fire": 17,
+   "red-crescent": 20,
+   "shelter": 90
+  }
+ }
+}
