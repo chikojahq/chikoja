@@ -54,3 +54,8 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;padding:24px 16px;b
 :root[data-theme="light"] .theme .to-dark{display:inline}
 :root:not([data-theme]) .theme .to-dark{display:inline}
 @media(prefers-color-scheme:dark){:root:not([data-theme]) .theme .to-dark{display:none}:root:not([data-theme]) .theme .to-light{display:inline}}
+/* filters */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:-8px 0 16px}
+.chip{font:inherit;font-size:.9rem;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.recent{margin-bottom:8px}.recent h2{font-size:1.1rem;color:var(--muted);margin:0 0 8px}

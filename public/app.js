@@ -38,3 +38,38 @@ if (themeBtn) themeBtn.addEventListener("click", () => {
   root.dataset.theme = dark ? "light" : "dark";
   try { localStorage.setItem("theme", root.dataset.theme); } catch {}
 });
+// Category page filters: text over name/address, badge chips, "has phone". All on the device.
+const f = document.getElementById("f");
+if (f) {
+  const fold = s => s.normalize("NFC").replace(/[كک]/g, "ک").replace(/[يی]/g, "ی").replace(/‌/g, "").toLowerCase();
+  const items = [...document.querySelectorAll(".place")], chips = [...document.querySelectorAll(".chip")];
+  const apply = () => {
+    const v = fold(f.value.trim()), on = chips.filter(c => c.getAttribute("aria-pressed") === "true");
+    let n = 0;
+    for (const li of items) {
+      const ok = (!v || fold(li.dataset.t).includes(v)) && on.every(c => c.dataset.badge ? li.dataset.b.split("|").includes(c.dataset.badge) : li.hasAttribute("data-phone"));
+      li.classList.toggle("hidden", !ok); if (ok) n++;
+    }
+    document.querySelector("[data-count]").textContent = String(n).replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+    document.querySelector("[data-nomatch]").classList.toggle("hidden", n > 0);
+  };
+  f.addEventListener("input", apply);
+  for (const c of chips) { c.setAttribute("aria-pressed", "false"); c.addEventListener("click", () => { c.setAttribute("aria-pressed", c.getAttribute("aria-pressed") === "true" ? "false" : "true"); apply(); }); }
+}
+// Recently viewed cities: remembered on this device only, shown on the home page.
+try {
+  const KEY = "recent", body = document.body;
+  if (body.dataset.city) {
+    const list = JSON.parse(localStorage.getItem(KEY) || "[]").filter(c => c.slug !== body.dataset.city);
+    list.unshift({ slug: body.dataset.city, name: body.dataset.cityName });
+    localStorage.setItem(KEY, JSON.stringify(list.slice(0, 8)));
+  }
+  const recent = document.querySelector(".recent");
+  if (recent) {
+    const list = JSON.parse(localStorage.getItem(KEY) || "[]");
+    if (list.length) {
+      recent.querySelector("ul").innerHTML = list.map(c => { const a = document.createElement("a"); a.href = `/${encodeURIComponent(c.slug)}/`; a.textContent = c.name; return `<li>${a.outerHTML}</li>`; }).join("");
+      recent.classList.remove("hidden");
+    }
+  }
+} catch {}
