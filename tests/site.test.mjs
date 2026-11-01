@@ -33,7 +33,11 @@ test("city hub, category page, pack page and empty category render", async () =>
 test("english aliases redirect to the Persian URL", async () => {
   const res = await get("/en/mashhad/");
   assert.equal(res.status, 301);
-  assert.equal(decodeURI(res.headers.get("location")), "/مشهد/");
+  assert.equal(decodeURI(new URL(res.headers.get("location")).pathname), "/مشهد/");
+  const cat = await get("/en/mashhad/pharmacies/");
+  assert.equal(cat.status, 301);
+  assert.equal(decodeURI(new URL(cat.headers.get("location")).pathname), "/مشهد/داروخانه/");
+  assert.equal((await get("/en/nowhere/")).status, 404);
 });
 
 // wrangler dev rewrites every request URL to localhost, so the host check is
