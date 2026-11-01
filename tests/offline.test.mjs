@@ -51,3 +51,19 @@ test("a saved city is served offline by the service worker", async () => {
   assert.match(await page.textContent("h1"), /آباده/, "unknown page offline falls back to the saved city");
   await ctx.close();
 });
+
+test("a new service worker drops old caches and serves fresh CSS", async () => {
+  const ctx = await browser.newContext();
+  const page = await ctx.newPage();
+  await page.goto(dev.base + encodeURI("/آباده/"));
+  await page.waitForFunction(() => navigator.serviceWorker.controller !== null || true);
+  // A stale cache left by an earlier worker version, then a fresh install (as a new sw.js causes).
+  await page.evaluate(async () => { const r = await navigator.serviceWorker.ready; const c = await caches.open("shell-v1"); await c.put("/style.css", new Response("body{}", { headers: { "content-type": "text/css" } })); await r.unregister(); });
+  await page.reload();
+  // waitForFunction treats a returned promise as truthy, so poll inside the page instead.
+  const keys = await page.evaluate(async () => { for (let i = 0; i < 60; i++) { const k = await caches.keys(); if (k.length && k.every(x => x.endsWith("-v3"))) return k; await new Promise(r => setTimeout(r, 250)); } return caches.keys(); });
+  assert.ok(keys.every(k => k.endsWith("-v3")), `old caches gone: ${keys}`);
+  const css = await page.evaluate(() => fetch("/style.css").then(r => r.text()));
+  assert.match(css, /\.theme\{/, "fresh stylesheet, not the stale one");
+  await ctx.close();
+});
