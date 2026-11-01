@@ -22,7 +22,9 @@ test("home is the Persian RTL city list with the emergency numbers", async () =>
 });
 
 test("city hub, category page, pack page and empty category render", async () => {
-  for (const p of ["/مشهد/", "/مشهد/داروخانه/", "/مشهد/بسته/", "/مشهد/پناهگاه/"]) assert.equal((await get(p)).status, 200, p);
+  for (const p of ["/مشهد/", "/مشهد/داروخانه/", "/مشهد/بسته/", "/مشهد/پناهگاه/", "/packs/mashhad"]) assert.equal((await get(p)).status, 200, p);
+  assert.match((await get("/مشهد/")).headers.get("content-type") ?? "", /text\/html/);
+  assert.match(await (await get("/مشهد/")).text(), /href="\/packs\/mashhad" download="chikoja-mashhad.html"/);
   const html = await (await get("/مشهد/داروخانه/")).text();
   assert.match(html, /class="place"/);
   assert.match(html, /geo:\d/);
