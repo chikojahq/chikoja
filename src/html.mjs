@@ -21,7 +21,7 @@ export function shell({ title, path, body, built, desc, city, bodyClass = "" }) 
 <meta name="theme-color" content="#b4532a">
 <meta name="data-date" content="${esc(built)}">
 </head>
-<body class="${bodyClass}">
+<body class="${bodyClass}"${city ? ` data-city="${esc(city.slug)}" data-city-name="${esc(city.name)}"` : ""}>
 <header class="top"><a class="brand" href="/">چی‌کجا</a><nav>${city ? `<a href="/${encodeURI(city.slug)}/">${esc(city.name)}</a>` : ""}<a href="/">شهرها</a><button class="theme" type="button" aria-label="تغییر تم روشن و تیره"><span class="to-dark">🌙 تیره</span><span class="to-light">☀️ روشن</span></button></nav></header>
 <main>${body}</main>
 <footer>${ATTR} · به‌روزرسانی داده‌ها: ${jalali(built)} · <a href="/درباره/">درباره</a> · <a href="/راهنما/ویرایش/">اصلاح داده‌ها</a></footer>
@@ -36,7 +36,7 @@ export const mapLinks = p => `<a class="btn" href="geo:${p.lat},${p.lon}?q=${p.l
 
 export function place(p, { compact = false } = {}) {
   const osmEdit = `https://www.openstreetmap.org/edit?${p.id[0] === "n" ? "node" : p.id[0] === "w" ? "way" : "relation"}=${p.id.slice(1)}`;
-  return `<li class="place" id="${p.id}"><div class="head"><h3>${esc(p.name)}${p.en ? ` <span class="en" dir="ltr">${esc(p.en)}</span>` : ""}</h3>${p.badges.map(b => `<span class="badge">${esc(b)}</span>`).join("")}</div>
+  return `<li class="place" id="${p.id}" data-t="${esc([p.name, p.en, p.suburb, p.street].filter(Boolean).join(" "))}" data-b="${esc(p.badges.join("|"))}"${p.phone ? " data-phone" : ""}><div class="head"><h3>${esc(p.name)}${p.en ? ` <span class="en" dir="ltr">${esc(p.en)}</span>` : ""}</h3>${p.badges.map(b => `<span class="badge">${esc(b)}</span>`).join("")}</div>
 ${p.street || p.suburb ? `<p class="addr">${esc([p.suburb, p.street].filter(Boolean).join("، "))}</p>` : ""}
 ${p.hours ? `<p class="hours">ساعت کار (طبق OSM): <span dir="ltr">${esc(p.hours)}</span></p>` : ""}
 <div class="actions">${p.phone ? `<a class="btn call" href="tel:${esc(p.phone.replace(/\s/g, ""))}">تماس <span dir="ltr">${fa(esc(p.phone))}</span></a>` : ""}${compact ? "" : mapLinks(p)}${compact ? "" : `<a class="btn ghost" href="${osmEdit}" rel="noopener">اشتباه است؟</a>`}</div>

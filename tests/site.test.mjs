@@ -29,7 +29,7 @@ test("city hub, category page, pack page and empty category render", async () =>
   assert.match(html, /class="place"/);
   assert.match(html, /geo:\d/);
   assert.match(html, /اشتباه است؟/);
-  assert.match(html, /[۰-۹]+ مکان/, "Persian digits");
+  assert.match(html, /[۰-۹]+<\/span> مکان/, "Persian digits");
 });
 
 test("english aliases redirect to the Persian URL", async () => {
@@ -86,5 +86,25 @@ test("the theme toggle switches and remembers light/dark on the device", async (
     assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), "dark", "remembered on the next page");
     await page.click(".theme");
     assert.equal(await page.evaluate(() => document.documentElement.dataset.theme), "light");
+  } finally { await browser.close(); }
+});
+
+test("category filters and recently viewed cities work on the device", async () => {
+  const { chromium } = await import("@playwright/test");
+  const browser = await chromium.launch();
+  try {
+    const page = await (await browser.newContext()).newPage();
+    await page.goto(dev.base + encodeURI("/مشهد/بیمارستان/"));
+    const visible = () => page.locator(".place:not(.hidden)").count();
+    const all = await visible();
+    assert.ok(all > 8);
+    await page.click('.chip[data-badge="اورژانس"]');
+    const er = await visible();
+    assert.ok(er > 0 && er < all, `emergency-only ${er} of ${all}`);
+    await page.fill("#f", "zzzz-no-such");
+    assert.equal(await visible(), 0);
+    assert.equal(await page.locator("[data-nomatch]").isVisible(), true);
+    await page.goto(dev.base + "/");
+    assert.match(await page.locator(".recent").textContent(), /مشهد/, "recently viewed shows Mashhad");
   } finally { await browser.close(); }
 });

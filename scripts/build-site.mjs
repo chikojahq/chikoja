@@ -18,6 +18,7 @@ const byProv = new Map();
 for (const c of cities) { const k = c.province || "سایر"; if (!byProv.has(k)) byProv.set(k, []); byProv.get(k).push(c); }
 const provs = [...byProv.entries()].sort((a, b) => b[1].reduce((s, c) => s + c.total, 0) - a[1].reduce((s, c) => s + c.total, 0));
 write("/", shell({ title: "جاهای ضروری هر شهر ایران", path: "/", built, body: `<h1>چی‌کجا</h1><p class="lead">بیمارستان، داروخانه، سوخت، آب، پلیس، آتش‌نشانی، هلال احمر و فضای امن هر شهر ایران؛ به فارسی و بدون اینترنت.</p>${phoneBar()}
+<section class="recent hidden" aria-label="شهرهای اخیر"><h2>اخیراً دیده‌اید</h2><ul class="cities"></ul></section>
 <label for="q" class="hidden">جست‌وجوی شهر</label><input id="q" class="search" type="search" placeholder="نام شهر…" autocomplete="off">
 ${provs.map(([p, cs]) => `<section class="province"><h2>${esc(p)}</h2><ul class="cities">${cs.map(c => `<li data-n="${esc(c.name)}"><a href="${encodeURI(cityUrl(c))}">${esc(c.name)}${c.total ? ` <small>${fa(c.total)}</small>` : ""}</a></li>`).join("")}</ul></section>`).join("")}` })); files++;
 
@@ -25,13 +26,13 @@ const cityDir = "data/build/city";
 for (const c of cities) {
   const data = JSON.parse(readFileSync(`${cityDir}/${c.en}.json`));
   const tiles = categories.map(cat => `<a class="tile" href="${encodeURI(catUrl(c, cat))}"><span class="ico">${cat.icon}</span><span class="t">${cat.title}</span><span class="n">${fa(c.counts[cat.en] || 0)} مکان</span></a>`).join("");
-  write(cityUrl(c), shell({ title: c.name, path: encodeURI(cityUrl(c)), built, city: c, desc: `جاهای ضروری ${c.name}: بیمارستان، داروخانه، سوخت، آب و فضای امن`, body: `<h1>${esc(c.name)} <small>${esc(c.province || "")}</small></h1>${phoneBar()}<div class="tiles">${tiles}</div>
+  write(cityUrl(c), shell({ title: c.name, path: encodeURI(cityUrl(c)), built, city: c, bodyClass: "hub", desc: `جاهای ضروری ${c.name}: بیمارستان، داروخانه، سوخت، آب و فضای امن`, body: `<h1>${esc(c.name)} <small>${esc(c.province || "")}</small></h1>${phoneBar()}<div class="tiles">${tiles}</div>
 <section class="offline"><h2>بدون اینترنت</h2><p>این شهر را روی گوشی نگه دارید یا بسته‌ی یک‌فایلی را دانلود و در تلگرام یا بله برای دیگران بفرستید.</p><div class="actions"><button class="btn call" data-save="${esc(c.slug)}" data-pack="/packs/${c.en}" hidden>ذخیره‌ی این شهر روی گوشی</button><a class="btn" href="/packs/${c.en}" download="chikoja-${c.en}.html">دانلود بسته‌ی آفلاین</a><a class="btn ghost" href="${encodeURI(cityUrl(c))}بسته/">بسته چیست؟</a></div></section>` })); files++;
   for (const cat of categories) {
     const items = data.places.filter(p => p.cat === cat.en);
     const note = cat.en === "shelter" ? `<p class="note">${items.some(p => !p.badges.length) ? "" : "در OSM پناهگاه رسمی برای این شهر ثبت نشده است. "}پارک‌های بزرگ فقط فضای باز هستند؛ به توصیه‌ی مقامات محلی عمل کنید.</p>` : "";
     const body = `<p class="crumbs"><a href="${encodeURI(cityUrl(c))}">${esc(c.name)}</a></p><h1>${cat.title} <small>${esc(c.name)}</small></h1>${phoneBar()}${note}` +
-      (items.length ? `<p class="count">${fa(items.length)} مکان · ترتیب: اول موارد نشان‌دار، سپس نام</p><ol class="places">${items.map(p => place(p)).join("")}</ol>` :
+      (items.length ? `${items.length > 8 ? `<label for="f" class="hidden">فیلتر</label><input id="f" class="search" type="search" placeholder="نام، خیابان یا محله…" autocomplete="off"><div class="chips">${[...new Set(items.flatMap(p => p.badges))].map(b => `<button class="chip" type="button" data-badge="${esc(b)}">${esc(b)}</button>`).join("")}${items.some(p => p.phone) ? `<button class="chip" type="button" data-phone>با تلفن</button>` : ""}</div>` : ""}<p class="count"><span data-count>${fa(items.length)}</span> مکان · ترتیب: اول موارد نشان‌دار، سپس نام</p><ol class="places">${items.map(p => place(p)).join("")}</ol><p class="empty hidden" data-nomatch>چیزی با این فیلتر پیدا نشد.</p>` :
         `<div class="empty"><p>هنوز ${cat.title} برای ${esc(c.name)} در OpenStreetMap ثبت نشده است.</p><p><a href="/راهنما/ویرایش/">چطور اضافه کنم؟</a></p></div>`);
     write(catUrl(c, cat), shell({ title: `${cat.title} ${c.name}`, path: encodeURI(catUrl(c, cat)), built, city: c, body })); files++;
   }
