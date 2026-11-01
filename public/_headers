@@ -1,5 +1,5 @@
 /*
-  Content-Security-Policy: default-src 'none'; style-src 'self'; script-src 'self'; font-src 'self'; manifest-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; style-src 'self'; script-src 'self'; connect-src 'self'; worker-src 'self'; font-src 'self'; manifest-src 'self'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Permissions-Policy: interest-cohort=(), camera=(), microphone=(), geolocation=()
@@ -10,3 +10,6 @@
 
 /*.json
   Cache-Control: public, max-age=3600
+
+/sw.js
+  Cache-Control: no-cache
