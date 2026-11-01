@@ -7,9 +7,9 @@
   "workers_dev": false,
   "preview_urls": false,
   "assets": {
-    "directory": "./public",
+    "directory": "./dist",
     "binding": "ASSETS",
-    "run_worker_first": true,
+    "run_worker_first": false,
     "not_found_handling": "404-page"
   },
   "routes": [

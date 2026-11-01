@@ -4,3 +4,6 @@ node_modules/
 test-results/
 screenshots/
 CLAUDE.md
+dist/
+data/build/
+screenshots/
