@@ -1,0 +1,10 @@
+[
+  {"slug":"بیمارستان","en":"hospitals","title":"بیمارستان و اورژانس","icon":"🏥","match":[["amenity","hospital"],["healthcare","hospital"]],"badges":[{"tag":"emergency","value":"yes","label":"اورژانس","first":true}]},
+  {"slug":"داروخانه","en":"pharmacies","title":"داروخانه","icon":"💊","match":[["amenity","pharmacy"],["healthcare","pharmacy"]],"badges":[{"tag":"opening_hours","value":"24/7","label":"شبانه‌روزی (طبق OSM)","first":true}]},
+  {"slug":"سوخت","en":"fuel","title":"پمپ بنزین و CNG","icon":"⛽","match":[["amenity","fuel"]],"badges":[{"tag":"fuel:cng","value":"yes","label":"CNG"},{"nameMatch":"CNG|سی ان جی|سی‌ان‌جی","label":"CNG"},{"tag":"fuel:lpg","value":"yes","label":"LPG"},{"tag":"fuel:diesel","value":"yes","label":"گازوئیل"}]},
+  {"slug":"هلال-احمر","en":"red-crescent","title":"هلال احمر و آمبولانس","icon":"🚑","match":[["emergency","ambulance_station"]],"nameMatch":"هلال احمر|هلال‌احمر|Red Crescent","badges":[]},
+  {"slug":"آتش-نشانی","en":"fire","title":"آتش‌نشانی","icon":"🚒","match":[["amenity","fire_station"]],"badges":[]},
+  {"slug":"پلیس","en":"police","title":"پلیس","icon":"👮","match":[["amenity","police"]],"badges":[]},
+  {"slug":"آب","en":"water","title":"آب آشامیدنی","icon":"🚰","match":[["amenity","drinking_water"],["amenity","water_point"],["man_made","water_tap"]],"require":{"man_made":{"drinking_water":"yes"}},"badges":[]},
+  {"slug":"پناهگاه","en":"shelter","title":"پناه و فضای امن","icon":"🏕️","match":[["emergency","assembly_point"],["leisure","park"]],"minAreaHa":{"leisure":1},"badges":[{"tag":"leisure","value":"park","label":"فضای باز — پناهگاه رسمی نیست"}]}
+]

@@ -6,12 +6,15 @@
   "type": "module",
   "scripts": {
     "dev": "wrangler dev",
+    "build": "node scripts/build-data.mjs && node scripts/build-site.mjs",
+    "build:site": "node scripts/build-site.mjs",
     "test": "node --test tests/",
     "screenshots": "node tests/screenshots.mjs",
     "deploy": "wrangler deploy"
   },
   "devDependencies": {
     "@playwright/test": "^1.64.1",
+    "osm-pbf-parser": "^2.3.0",
     "vazirmatn": "^33.0.3",
     "wrangler": "^4.156.0"
   },

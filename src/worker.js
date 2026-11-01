@@ -9,7 +9,7 @@ export default {
     // wrangler dev rewrites URLs to localhost; serve the page there too.
     const isLocal = url.hostname === "localhost" || url.hostname === "127.0.0.1";
     if (url.hostname !== CANONICAL_HOST && !isLocal) {
-      return Response.redirect(`https://${CANONICAL_HOST}/`, 301);
+      return Response.redirect(`https://${CANONICAL_HOST}${url.pathname}${url.search}`, 301);
     }
     return env.ASSETS.fetch(request);
   },
