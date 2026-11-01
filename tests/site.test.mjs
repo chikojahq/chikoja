@@ -29,6 +29,8 @@ test("city hub, category page, pack page and empty category render", async () =>
   assert.match(html, /class="place"/);
   assert.match(html, /geo:\d/);
   assert.match(html, /اشتباه است؟/);
+  assert.match(html, /openstreetmap.org\/note\/new\?lat=/, "quick report without an account");
+  assert.match(html, /جایی کم است؟/);
   assert.match(html, /[۰-۹]+<\/span> مکان/, "Persian digits");
 });
 

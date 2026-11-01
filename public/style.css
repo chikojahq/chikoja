@@ -59,3 +59,10 @@ footer{text-align:center;color:var(--muted);font-size:.85rem;padding:24px 16px;b
 .chip{font:inherit;font-size:.9rem;min-height:44px;padding:0 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
 .chip[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
 .recent{margin-bottom:8px}.recent h2{font-size:1.1rem;color:var(--muted);margin:0 0 8px}
+/* fix menu */
+.fix{margin-top:8px}.fix summary{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:var(--r);border:1px solid var(--border);color:var(--text);font-weight:600;cursor:pointer;list-style:none}
+.fix summary::-webkit-details-marker{display:none}.fix[open] summary{background:var(--badge-bg)}
+.fix-body{margin-top:8px;padding:12px;border-radius:var(--r);background:var(--bg);border:1px solid var(--border);display:flex;flex-wrap:wrap;gap:8px}
+.fix-body .meta{flex-basis:100%;margin:0}
+.missing{color:var(--muted);margin:16px 0 0}.missing a{color:var(--accent)}
+.prose table{border-collapse:collapse;width:100%;max-width:65ch}.prose td,.prose th{border:1px solid var(--border);padding:6px 10px;text-align:start}

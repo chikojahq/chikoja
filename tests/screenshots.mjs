@@ -17,7 +17,7 @@ try {
     await page.evaluate(() => document.fonts.ready);
     const font = await page.evaluate(() => document.fonts.check('16px "Vazirmatn"'));
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth);
-    const small = await page.evaluate(() => [...document.querySelectorAll("a,button")].filter(a => !a.closest("p,li:not(.place)") && a.getBoundingClientRect().width && a.getBoundingClientRect().height < 44).map(a => a.textContent.trim().slice(0, 20)));
+    const small = await page.evaluate(() => [...document.querySelectorAll("a,button")].filter(a => !a.closest("p,li:not(.place)") && !a.closest("details:not([open])") && a.getBoundingClientRect().width && a.getBoundingClientRect().height < 44).map(a => a.textContent.trim().slice(0, 20)));
     const file = `screenshots/${name}-${size}-${scheme}.png`;
     await page.screenshot({ path: file, fullPage: !name.includes("pharmacies") && name !== "home" });
     shots++;

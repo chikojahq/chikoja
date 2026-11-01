@@ -34,11 +34,19 @@ export const phoneBar = () => `<section class="phones" aria-label="شماره‌
 
 export const mapLinks = p => `<a class="btn" href="geo:${p.lat},${p.lon}?q=${p.lat},${p.lon}(${encodeURIComponent(p.name)})">نقشه</a><a class="btn ghost" href="https://www.openstreetmap.org/${p.id[0] === "n" ? "node" : p.id[0] === "w" ? "way" : "relation"}/${p.id.slice(1)}" rel="noopener">OSM</a><a class="btn ghost" href="https://neshan.org/maps/@${p.lat},${p.lon},17z" rel="noopener">نشان</a>`;
 
+// Three ways to fix a place, easiest first: an OSM note needs no account; iD edits it directly; the guide covers phone apps.
+export const osmNote = (lat, lon) => `https://www.openstreetmap.org/note/new?lat=${lat}&lon=${lon}#map=19/${lat}/${lon}`;
+export const osmEditAt = (lat, lon) => `https://www.openstreetmap.org/edit#map=19/${lat}/${lon}`;
+export function fixMenu(p) {
+  const osmEdit = `https://www.openstreetmap.org/edit?${p.id[0] === "n" ? "node" : p.id[0] === "w" ? "way" : "relation"}=${p.id.slice(1)}`;
+  return `<details class="fix"><summary>اشتباه است؟</summary><div class="fix-body"><a class="btn call" href="${osmNote(p.lat, p.lon)}" rel="noopener">گزارش سریع، بدون حساب</a><a class="btn" href="${osmEdit}" rel="noopener">ویرایش در OSM</a><a class="btn ghost" href="/راهنما/ویرایش/">راهنما</a><p class="meta">گزارش سریع یک یادداشت روی نقشه می‌گذارد؛ نام مکان و اشتباه را بنویسید. با گوشی، اپ StreetComplete یا Every Door همین مکان را نشان می‌دهد.</p></div></details>`;
+}
 export function place(p, { compact = false } = {}) {
   const osmEdit = `https://www.openstreetmap.org/edit?${p.id[0] === "n" ? "node" : p.id[0] === "w" ? "way" : "relation"}=${p.id.slice(1)}`;
   return `<li class="place" id="${p.id}" data-t="${esc([p.name, p.en, p.suburb, p.street].filter(Boolean).join(" "))}" data-b="${esc(p.badges.join("|"))}"${p.phone ? " data-phone" : ""}><div class="head"><h3>${esc(p.name)}${p.en ? ` <span class="en" dir="ltr">${esc(p.en)}</span>` : ""}</h3>${p.badges.map(b => `<span class="badge">${esc(b)}</span>`).join("")}</div>
 ${p.street || p.suburb ? `<p class="addr">${esc([p.suburb, p.street].filter(Boolean).join("، "))}</p>` : ""}
 ${p.hours ? `<p class="hours">ساعت کار (طبق OSM): <span dir="ltr">${esc(p.hours)}</span></p>` : ""}
-<div class="actions">${p.phone ? `<a class="btn call" href="tel:${esc(p.phone.replace(/\s/g, ""))}">تماس <span dir="ltr">${fa(esc(p.phone))}</span></a>` : ""}${compact ? "" : mapLinks(p)}${compact ? "" : `<a class="btn ghost" href="${osmEdit}" rel="noopener">اشتباه است؟</a>`}</div>
+<div class="actions">${p.phone ? `<a class="btn call" href="tel:${esc(p.phone.replace(/\s/g, ""))}">تماس <span dir="ltr">${fa(esc(p.phone))}</span></a>` : ""}${compact ? "" : mapLinks(p)}</div>
+${compact ? "" : fixMenu(p)}
 <p class="meta">آخرین بررسی در OSM&rlm;: ${jalali(p.checked)}</p></li>`;
 }
