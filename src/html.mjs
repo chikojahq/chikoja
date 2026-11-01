@@ -18,6 +18,7 @@ export function shell({ title, path, body, built, desc, city, bodyClass = "" }) 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="manifest" href="/manifest.webmanifest">
 <meta name="theme-color" content="#b4532a">
+<meta name="data-date" content="${esc(built)}">
 </head>
 <body class="${bodyClass}">
 <header class="top"><a class="brand" href="/">چی‌کجا</a><nav>${city ? `<a href="/${encodeURI(city.slug)}/">${esc(city.name)}</a>` : ""}<a href="/">شهرها</a></nav></header>

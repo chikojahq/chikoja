@@ -1,0 +1,10 @@
+[Unit]
+Description=Run the chikoja refresh every Sunday 02:00 UTC
+
+[Timer]
+OnCalendar=Sun 02:00 UTC
+Persistent=true
+RandomizedDelaySec=10m
+
+[Install]
+WantedBy=timers.target

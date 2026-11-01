@@ -1,0 +1,7 @@
+[Unit]
+Description=chikoja weekly data refresh and deploy
+
+[Service]
+Type=oneshot
+ExecStart=%h/chikoja-refresh/refresh.sh
+Nice=10
