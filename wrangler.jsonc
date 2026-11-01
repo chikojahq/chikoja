@@ -14,6 +14,8 @@
   },
   "routes": [
     { "pattern": "chikoja.ir", "custom_domain": true },
-    { "pattern": "*.chikoja.ir/*", "zone_name": "chikoja.ir" }
+    { "pattern": "*.chikoja.ir/*", "zone_name": "chikoja.ir" },
+    { "pattern": "chikoja.com", "custom_domain": true },
+    { "pattern": "*.chikoja.com/*", "zone_name": "chikoja.com" }
   ]
 }
