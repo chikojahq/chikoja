@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
-# Weekly data refresh and deploy. Runs from a systemd user timer on the build
-# machine, which has no git and no root: the code comes from the main-branch
-# tarball, Node from a nodejs.org tarball in ~/.local/node, and the deploy token from ~/.config/cloudflare/edit.token.
+# Weekly data refresh and deploy. Runs from a systemd user timer; the code comes
+# from the main-branch tarball (no git checkout needed), Node is the system one
+# or, if present, a tarball in ~/.local/node, and the deploy token is read from
+# ~/.config/cloudflare/edit.token.
 #   refresh.sh [workdir]   (default ~/chikoja-refresh)
+#   DRY_RUN=1 refresh.sh   builds and gates everything but does not deploy, so
+#                          a new machine can be tested without publishing.
 set -euo pipefail
 WORK="${1:-$HOME/chikoja-refresh}"; mkdir -p "$WORK/state"
-export PATH="$HOME/.local/node/bin:$PATH"
+[ -d "$HOME/.local/node/bin" ] && export PATH="$HOME/.local/node/bin:$PATH"
 log() { printf '%s %s\n' "$(date -u +%FT%TZ)" "$*"; }
 
 log "fetching code"
@@ -34,6 +37,7 @@ node scripts/build-site.mjs
 node scripts/build-packs.mjs
 n=$(find dist -type f | wc -l); [ "$n" -gt 1000 ] && [ "$n" -lt 20000 ] || { log "dist has $n files"; exit 1; }
 
+if [ "${DRY_RUN:-}" = 1 ]; then log "dry run: built $n files, not deploying"; exit 0; fi
 log "deploying"
 CLOUDFLARE_API_TOKEN="$(cat "$HOME/.config/cloudflare/edit.token")" npx wrangler deploy 2>&1 | grep -E 'Deployed|Version ID|ERROR' || true
 sleep 20
