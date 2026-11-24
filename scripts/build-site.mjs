@@ -52,5 +52,5 @@ write("/راهنما/ویرایش/", shell({ title: "اصلاح داده‌ها"
 writeFileSync(`${out}/404.html`, shell({ title: "پیدا نشد", path: "/404", built, body: `<h1>پیدا نشد</h1><p>چنین صفحه‌ای نیست. شاید نام شهر عوض شده باشد؛ از <a href="/">فهرست شهرها</a> شروع کنید.</p>` })); files++;
 // English aliases → Persian URLs, resolved by the Worker (Cloudflare's _redirects allows only 100 splat rules).
 writeFileSync("src/aliases.json", JSON.stringify({ cities: Object.fromEntries(cities.map(c => [c.en, c.slug])), categories: Object.fromEntries(categories.map(k => [k.en, k.slug])) }));
-writeFileSync(`${out}/manifest.webmanifest`, JSON.stringify({ name: "چی‌کجا", short_name: "چی‌کجا", start_url: "/", display: "standalone", background_color: "#f6f3ee", theme_color: "#b4532a", dir: "rtl", lang: "fa", icons: [{ src: "/logo.svg", sizes: "any", type: "image/svg+xml" }] }));
+writeFileSync(`${out}/manifest.webmanifest`, JSON.stringify({ name: "چی‌کجا", short_name: "چی‌کجا", name_localized: { fa: { value: "چوگان", lang: "fa", dir: "rtl" } }, start_url: "/", display: "standalone", background_color: "#f6f3ee", theme_color: "#b4532a", dir: "rtl", lang: "fa", icons: [{ src: "/logo.svg", sizes: "any", type: "image/svg+xml" }] }));
 console.error(`wrote ${files} pages for ${cities.length} cities`);
